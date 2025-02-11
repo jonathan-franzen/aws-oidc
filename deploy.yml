@@ -14,3 +14,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: <AWS_REGION>
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: GitHub-Deploy-User
+      - name: Example deployment
+        run: |
+          aws cloudformation deploy \
+            --template-file <TEMPLATE_FILE> \
+            --stack-name <STACK_NAME> \
+            --capabilities CAPABILITY_NAMED_IAM \
+            --region <AWS_REGION>
