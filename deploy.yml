@@ -1,0 +1,16 @@
+name: AWS
+on:
+  push:
+    tags: [ '*' ]
+
+jobs:
+  production:
+    name: Deploy
+    runs-on: ubuntu-22.04
+    concurrency: Deploy
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
